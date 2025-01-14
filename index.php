@@ -1,6 +1,36 @@
 <?php
 session_start();
 require_once("config/koneksi.php");
+
+if (isset($_POST['submit_keranjang'])) {
+  $id = $_POST['id'];
+  $gambar = $_POST['gambar'];
+  $harga = $_POST['harga'];
+  $nama = $_POST['nama'];
+  $jumlah = $_POST['jumlah'];
+
+  $stmt = $koneksi->prepare("SELECT * FROM keranjang WHERE id = :id");
+  $stmt->bindParam(':id', $id);
+  $stmt->execute();
+
+  if ($stmt->rowCount() > 0) {
+    echo '<div class="error">Produk sudah ada di keranjang.</div>';
+  } else {
+    $stmt = $koneksi->prepare("INSERT INTO keranjang (id, gambar, harga, nama, jumlah) 
+                                 VALUES (:id, :gambar, :harga, :nama, :jumlah)");
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':gambar', $gambar);
+    $stmt->bindParam(':harga', $harga);
+    $stmt->bindParam(':nama', $nama);
+    $stmt->bindParam(':jumlah', $jumlah);
+
+    if ($stmt->execute()) {
+      echo '<div class="success">Produk berhasil ditambahkan ke keranjang.</div>';
+    } else {
+      echo '<div class="error">Terjadi kesalahan. Produk gagal ditambahkan.</div>';
+    }
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -210,19 +240,32 @@ require_once("config/koneksi.php");
           ?>
             <div class="col-lg-4 col-md-6 d-flex align-items-stretch jenis_ayam-item">
               <div class="icon-box">
-                <div class="icon"><img src="admonly/<?php echo htmlspecialchars($result['gambar']); ?>" alt="Ayam KUB" class="img-fluid"></div>
+                <div class="icon">
+                  <img src="admonly/<?php echo htmlspecialchars($result['gambar']); ?>" alt="Ayam KUB" class="img-fluid">
+                </div>
                 <h4 class="title"><?php echo htmlspecialchars($result['nama']); ?></h4>
                 <p class="description"><?php echo htmlspecialchars($result['deskripsi']); ?></p>
+                <h5 class="price">Harga : Rp. <?php echo number_format($result['harga'], 0, ',', '.'); ?>/Kg</h5>
+                <form method="post" action="" enctype="multipart/form-data">
+                  <input type="hidden" name="id" value="<?php echo $result['id']; ?>">
+                  <input type="hidden" name="gambar" value="<?php echo htmlspecialchars($result['gambar']); ?>">
+                  <input type="hidden" name="nama" value="<?php echo htmlspecialchars($result['nama']); ?>">
+                  <input type="hidden" name="harga" value="<?php echo $result['harga']; ?>">
+                  <div class="form-group">
+                    <label for="jumlah-<?php echo $result['id']; ?>">Masukkan Jumlah:</label>
+                    <input type="number" name="jumlah" id="jumlah-<?php echo $result['id']; ?>" value="1" min="1" class="form-control">
+                  </div>
+                  <input type="submit" name="submit_keranjang" class="btn btn-primary" value="TAMBAH KE KERANJANG">
+                </form>
               </div>
             </div>
           <?php
           }
           ?>
         </div>
-
       </div>
-    </section><!-- End Jenis Ayam Section -->
-
+    </section>
+    <!-- End Jenis Ayam Section -->
 
     <!-- ======= Distribusi Section ======= -->
     <section id="distribusi" class="distribusi">

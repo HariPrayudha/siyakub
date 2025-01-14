@@ -1055,6 +1055,9 @@ section {
 }
 
 #jenis_ayam .icon-box {
+  display: flex;
+  flex-direction: column; /* Elemen ditata secara vertikal */
+  justify-content: space-between; /* Mengatur elemen agar ruang terisi di atas dan bawah */
   flex: 1 1 calc(33.333% - 30px);
   margin-bottom: 30px;
   background: #fff;
@@ -1062,16 +1065,26 @@ section {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   text-align: center;
+  min-height: 350px; /* Memberikan tinggi minimum untuk keseragaman */
 }
 
 #jenis_ayam .icon {
   margin-bottom: 15px;
+  display: flex; /* Aktifkan Flexbox untuk elemen ini */
+  justify-content: center; /* Pusatkan konten secara horizontal */
+  align-items: center; /* Pusatkan konten secara vertikal */
+  width: 100%; /* Pastikan elemen mengambil lebar penuh */
+  height: 150px; /* Tetapkan tinggi tetap pada kontainer gambar */
+  overflow: hidden; /* Untuk memastikan gambar tidak keluar dari kontainer */
 }
 
 #jenis_ayam .icon img {
-  max-width: 100%;
+  max-width: 150px; /* Tetapkan lebar tetap */
+  height: auto; /* Pastikan proporsi tetap terjaga */
   border-radius: 8px;
+  display: block; /* Memastikan gambar ditampilkan sebagai elemen blok */
 }
+
 
 #jenis_ayam .title {
   font-size: 20px;
@@ -1082,6 +1095,23 @@ section {
 #jenis_ayam .description {
   font-size: 14px;
   color: #666;
+}
+
+#jenis_ayam .price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+#jenis_ayam .btn-primary {
+  margin-top: 10px;
+  background-color: #42ca4b;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .jenis_ayam-container {
