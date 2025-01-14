@@ -181,7 +181,7 @@ require_once("config/koneksi.php");
           ?>
           <div class="col-lg-4 col-md-6 portfolio-item">
             <div class="portfolio-wrap">
-              <img src="admin/<?php echo htmlspecialchars($result['gambar']); ?>" alt="Gambar Portofolio" class="img-fluid">
+              <img src="admonly/<?php echo htmlspecialchars($result['gambar']); ?>" alt="Gambar Portofolio" class="img-fluid">
             </div>
           </div>
           <?php
@@ -209,7 +209,7 @@ require_once("config/koneksi.php");
       ?>
       <div class="col-lg-4 col-md-6 d-flex align-items-stretch jenis_ayam-item">
         <div class="icon-box">
-          <div class="icon"><img src="admin/<?php echo htmlspecialchars($result['gambar']); ?>" alt="Ayam KUB" class="img-fluid"></div>
+          <div class="icon"><img src="admonly/<?php echo htmlspecialchars($result['gambar']); ?>" alt="Ayam KUB" class="img-fluid"></div>
           <h4 class="title"><?php echo htmlspecialchars($result['nama']); ?></h4>
           <p class="description"><?php echo htmlspecialchars($result['deskripsi']); ?></p>
         </div>

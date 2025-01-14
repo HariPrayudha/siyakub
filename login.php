@@ -15,7 +15,7 @@ session_start();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($result) {
             $_SESSION['email'] = $email;
-            header('location:admin/index.php');
+            header('location:admonly/index.php');
             echo '<div class="success">Login Berhasil</div>';
         } else {
             echo '<div class="error">Email atau Password Salah</div>';
