@@ -1085,7 +1085,6 @@ section {
   display: block; /* Memastikan gambar ditampilkan sebagai elemen blok */
 }
 
-
 #jenis_ayam .title {
   font-size: 20px;
   margin-bottom: 10px;
@@ -1378,6 +1377,74 @@ section {
  .form-containerr form p a{
    color:#32c051;
  }
+
+ .shopping-cart table {
+  text-align: center;
+  width: 100%;
+}
+
+.shopping-cart table thead th {
+  text-align: center;
+  padding: 1rem;
+  font-size: 1rem;
+  color: #42ca4b; /* Green theme */
+  background: #000000;
+}
+
+.shopping-cart table tr td {
+  border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  font-size: 1rem;
+  color: #000000;
+}
+
+.shopping-cart table input[type="number"] {
+  border: 1px solid #fffcfc;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  color: #000000;
+  width: 8rem;
+}
+
+.shopping-cart table input[type="submit"] {
+  padding: .4rem 1.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  background: #42ca4b; /* Green theme */
+  color: #ffffff;
+}
+
+.shopping-cart table input[type="submit"]:hover {
+  background: #9ef4a4; /* Hover effect (lighter green) */
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.shopping-cart table .table-bottom {
+  background: #f1f1f1; /* Lighter background */
+}
+
+.shopping-cart .checkout-btn {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.shopping-cart .checkout-btn a {
+  display: inline-block;
+  width: auto;
+  background: #42ca4b; /* Green theme */
+  font-size: 1rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  padding: .8rem 2rem;
+}
+
+.shopping-cart .checkout-btn a.disabled {
+  pointer-events: none;
+  opacity: .5;
+  user-select: none;
+  background: #9ef4a4; /* Hover effect disabled */
+}
 
 #footer {
   background: #588760;
