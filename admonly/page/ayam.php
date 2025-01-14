@@ -23,6 +23,7 @@ require_once("../config/koneksi.php");
             <th>No</th>
             <th>Gambar</th>
             <th>Nama</th>
+            <th>Harga</th>
             <th>Deskripsi</th>
             <th>Action</th>
         </tr>
@@ -35,6 +36,7 @@ require_once("../config/koneksi.php");
                 <td><?php echo $no ?></td>
                 <td><img src="<?php echo htmlspecialchars($result['gambar']); ?>" alt="Gambar Portofolio" height="200" width="200"></td>
                 <td><?php echo htmlspecialchars($result['nama']); ?></td>
+                <td><?php echo htmlspecialchars($result['harga']); ?></td>
                 <td><?php echo htmlspecialchars($result['deskripsi']); ?></td>
                 <td>
                 <a href="index.php?page=edit_ayam&id=<?php echo htmlspecialchars($result['id']); ?>" class="btn btn-warning">EDIT</a>

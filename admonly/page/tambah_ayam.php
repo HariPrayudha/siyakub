@@ -3,6 +3,7 @@ require_once("../config/koneksi.php");
 
 if(isset($_POST['submit_ayam'])){
     $nama = $_POST['nama'];
+    $harga = $_POST['harga'];
     $deskripsi = $_POST['deskripsi'];
 
     $target_dir = "gambar/";
@@ -14,6 +15,7 @@ if(isset($_POST['submit_ayam'])){
     VALUES(:gambar, :nama, :deskripsi)");
     $stmt->bindParam(':gambar', $photo_file);
     $stmt->bindParam(':nama', $nama);
+    $stmt->bindParam(':harga', $harga);
     $stmt->bindParam(':deskripsi', $deskripsi);
 
     if($stmt->execute()){
@@ -30,6 +32,7 @@ if(isset($_POST['submit_ayam'])){
         <form method="post" action="" enctype="multipart/form-data">
             <input type="file" name="gambar" placeholder="Gambar" class="form-control"> <br>
             <input type="text" name="nama" placeholder="Nama Ayam" class="form-control"> <br>
+            <input type="number" name="harga" placeholder="Harga Ayam" class="form-control"> <br>
             <input type="text" name="deskripsi" placeholder="Deskripsi" class="form-control"> <br>
             <input type="submit" name="submit_ayam" value="Tambah Ayam" class="submit">
         </form>
