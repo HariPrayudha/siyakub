@@ -74,6 +74,7 @@ require_once("config/koneksi.php");
           <li><a class="nav-link scrollto" href="#distribusi">Distribusi</a></li>
           <li><a class="nav-link scrollto" href="#alur">Alur Pemesanan</a></li>
           <li><a class="nav-link scrollto" href="#contact">Kontak Kami</a></li>
+          <li><a class="nav-link scrollto" href="profile.php">Profile</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->

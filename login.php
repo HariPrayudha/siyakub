@@ -84,12 +84,19 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'MASUK') {
 
       <div class="logo me-auto">
         <h1><a href="index.php"><img src="assets/img/logo.png" alt="" class="img-fluid"> SIYAKUB</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
 
       <nav id="navbar" class="navbar">
-
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">Beranda</a></li>
+          <li><a class="nav-link scrollto" href="#about">Tentang Kami</a></li>
+          <li><a class="nav-link scrollto" href="#portfolio">Portofolio</a></li>
+          <li><a class="nav-link scrollto" href="#jenis_ayam">Jenis Ayam</a></li>
+          <li><a class="nav-link scrollto" href="#distribusi">Distribusi</a></li>
+          <li><a class="nav-link scrollto" href="#alur">Alur Pemesanan</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Kontak Kami</a></li>
+          <li><a class="nav-link scrollto" href="profile.php">Profile</a></li>
+        </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
       <a href="index.php"><img src="assets/img/logo2.png" alt="" class="img-fluid" style="height: 50px; margin-left: 10px;"></a>
