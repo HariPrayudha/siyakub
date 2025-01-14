@@ -1,26 +1,26 @@
 <?php
 session_start();
-require_once("config/koneksi.php");
+  require_once("config/koneksi.php");
 
-if (isset($_POST['submit']) && $_POST['submit'] == 'MASUK') {
-  $email = $_POST['email'];
-  $password = $_POST['password'];
-  if (empty($email) || empty($password)) {
-    echo "<meta http-equiv='refresh' content='0; url=login.php'>";
-  } else {
-    $stmt = $koneksi->prepare("SELECT * FROM admin WHERE email = :email AND password = :password");
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':password', $password);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($result) {
-      $_SESSION['email'] = $email;
-      header('location:admonly/index.php');
-      echo '<div class="success">Login Berhasil</div>';
+  if (isset($_POST['submit']) && $_POST['submit'] == 'MASUK') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    if (empty($email) || empty($password)) {
+        echo "<meta http-equiv='refresh' content='0; url=loginus.php'>";
     } else {
-      echo '<div class="error">Email atau Password Salah</div>';
+        $stmt = $koneksi->prepare("SELECT * FROM user WHERE email = :email AND password = :password");
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $password);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            $_SESSION['email'] = $email;
+            header('location:index.php');
+            echo '<div class="success">Login Berhasil</div>';
+        } else {
+            echo '<div class="error">Email atau Password Salah</div>';
+        }
     }
-  }
 }
 ?>
 
@@ -55,12 +55,12 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'MASUK') {
 </head>
 
 <body>
-  <?php
-  if (isset($_SESSION['message'])) {
-    echo $_SESSION['message'];
-    unset($_SESSION['message']);
-  }
-  ?>
+    <?php
+    if (isset($_SESSION['message'])) {
+        echo $_SESSION['message'];
+        unset($_SESSION['message']);
+    }
+    ?>
 
   <!-- ======= Top Bar ======= -->
   <section id="topbar" class="d-flex align-items-center">
@@ -89,7 +89,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'MASUK') {
       </div>
 
       <nav id="navbar" class="navbar">
-
+        
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
       <a href="index.php"><img src="assets/img/logo2.png" alt="" class="img-fluid" style="height: 50px; margin-left: 10px;"></a>
@@ -98,13 +98,13 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'MASUK') {
 
   <main>
     <div class="form-containerr">
-      <form action="" method="post">
-        <h3 class="title">Login Admin</h3>
-        <input type="email" name="email" placeholder="Masukkan Email" class="box" required>
-        <input type="password" name="password" placeholder="Masukkan Password" class="box" required>
-        <input type="submit" value="MASUK" class="form-btn" name="submit">
-        <p>Tidak Punya Akun? <a href="register.php">DAFTAR</a></p>
-      </form>
+        <form action="" method="post">
+	        <h3 class="title">Login User</h3>
+	        <input type="email" name="email" placeholder="Masukkan Email" class="box" required>
+	        <input type="password" name="password" placeholder="Masukkan Password" class="box" required>
+	        <input type="submit" value="MASUK" class="form-btn" name="submit">
+	        <p>Tidak Punya Akun? <a href="registeruser.php">DAFTAR</a></p>
+        </form>
     </div>
   </main>
 
@@ -147,7 +147,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'MASUK') {
             <form action="forms/newsletter.php" method="post">
               <input type="email" name="email" placeholder="Masukkan email Anda"><input type="submit" name="submit_buletin" value="Daftar">
             </form>
-          </div>
+          </div>          
 
         </div>
       </div>
@@ -155,7 +155,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'MASUK') {
 
     <div class="container">
       <div class="copyright">
-        &copy;2024 Copyright <strong><span>SIYAKUB</span></strong>.
+        &copy;2024 Copyright <strong><span>SIYAKUB</span></strong>. 
       </div>
       <div class="credits">
         Designed by <a href="https://sumut.bsip.pertanian.go.id/">BSIP Sumut</a>

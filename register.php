@@ -2,23 +2,23 @@
 session_start();
 require_once("config/koneksi.php");
 
-if(isset($_POST['submit'])){
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+if (isset($_POST['submit'])) {
+  $email = $_POST['email'];
+  $password = $_POST['password'];
 
-    $stmt = $koneksi->prepare("SELECT * FROM `admin` WHERE email = :email");
-    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-    $stmt->execute();
+  $stmt = $koneksi->prepare("SELECT * FROM `admin` WHERE email = :email");
+  $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+  $stmt->execute();
 
-    if($stmt->rowCount() > 0){
-        echo '<div class="error">Email Sudah Terdaftar Di Akun Lain, Masukkan Email Lain</div>';
-    } else {
-        $insert = $koneksi->prepare("INSERT INTO `admin`(email, password) VALUES(:email, :password)");
-        $insert->bindParam(':email', $email, PDO::PARAM_STR);
-        $insert->bindParam(':password', $password, PDO::PARAM_STR);
-        $insert->execute();
-        echo '<div class="success">Akun Berhasil Terdaftar, Silahkan Login</div>';
-    }
+  if ($stmt->rowCount() > 0) {
+    echo '<div class="error">Email Sudah Terdaftar Di Akun Lain, Masukkan Email Lain</div>';
+  } else {
+    $insert = $koneksi->prepare("INSERT INTO `admin`(email, password) VALUES(:email, :password)");
+    $insert->bindParam(':email', $email, PDO::PARAM_STR);
+    $insert->bindParam(':password', $password, PDO::PARAM_STR);
+    $insert->execute();
+    echo '<div class="success">Akun Berhasil Terdaftar, Silahkan Login</div>';
+  }
 }
 ?>
 
@@ -53,12 +53,12 @@ if(isset($_POST['submit'])){
 </head>
 
 <body>
-    <?php
-    if (isset($_SESSION['message'])) {
-        echo $_SESSION['message'];
-        unset($_SESSION['message']);
-    }
-    ?>
+  <?php
+  if (isset($_SESSION['message'])) {
+    echo $_SESSION['message'];
+    unset($_SESSION['message']);
+  }
+  ?>
 
   <!-- ======= Top Bar ======= -->
   <section id="topbar" class="d-flex align-items-center">
@@ -87,7 +87,7 @@ if(isset($_POST['submit'])){
       </div>
 
       <nav id="navbar" class="navbar">
-        
+
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
       <a href="index.php"><img src="assets/img/logo2.png" alt="" class="img-fluid" style="height: 50px; margin-left: 10px;"></a>
@@ -96,13 +96,13 @@ if(isset($_POST['submit'])){
 
   <main>
     <div class="form-containerr">
-        <form action="" method="post">
-            <h3 class="title">Daftar Admin</h3>
-            <input type="email" name="email" placeholder="Masukkan Email" class="box" required>
-            <input type="password" name="password" placeholder="Masukkan Password" class="box" required>
-            <input type="submit" value="DAFTAR SEKARANG" class="form-btn" name="submit">
-            <p>Sudah Punya Akun? <a href="login.php">LOGIN</a></p>
-        </form>
+      <form action="" method="post">
+        <h3 class="title">Daftar Admin</h3>
+        <input type="email" name="email" placeholder="Masukkan Email" class="box" required>
+        <input type="password" name="password" placeholder="Masukkan Password" class="box" required>
+        <input type="submit" value="DAFTAR SEKARANG" class="form-btn" name="submit">
+        <p>Sudah Punya Akun? <a href="login.php">LOGIN</a></p>
+      </form>
     </div>
   </main>
 
@@ -145,7 +145,7 @@ if(isset($_POST['submit'])){
             <form action="forms/newsletter.php" method="post">
               <input type="email" name="email" placeholder="Masukkan email Anda"><input type="submit" name="submit_buletin" value="Daftar">
             </form>
-          </div>          
+          </div>
 
         </div>
       </div>
@@ -153,7 +153,7 @@ if(isset($_POST['submit'])){
 
     <div class="container">
       <div class="copyright">
-        &copy;2024 Copyright <strong><span>SIYAKUB</span></strong>. 
+        &copy;2024 Copyright <strong><span>SIYAKUB</span></strong>.
       </div>
       <div class="credits">
         Designed by <a href="https://sumut.bsip.pertanian.go.id/">BSIP Sumut</a>

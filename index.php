@@ -34,12 +34,12 @@ require_once("config/koneksi.php");
 </head>
 
 <body>
-    <?php
-    if (isset($_SESSION['message'])) {
-        echo $_SESSION['message'];
-        unset($_SESSION['message']);
-    }
-    ?>
+  <?php
+  if (isset($_SESSION['message'])) {
+    echo $_SESSION['message'];
+    unset($_SESSION['message']);
+  }
+  ?>
 
   <!-- ======= Top Bar ======= -->
   <section id="topbar" class="d-flex align-items-center">
@@ -177,13 +177,13 @@ require_once("config/koneksi.php");
         <div class="row portfolio-container">
           <?php
           $stmt = $koneksi->query("SELECT * FROM portofolio");
-          while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+          while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
           ?>
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="admonly/<?php echo htmlspecialchars($result['gambar']); ?>" alt="Gambar Portofolio" class="img-fluid">
+            <div class="col-lg-4 col-md-6 portfolio-item">
+              <div class="portfolio-wrap">
+                <img src="admonly/<?php echo htmlspecialchars($result['gambar']); ?>" alt="Gambar Portofolio" class="img-fluid">
+              </div>
             </div>
-          </div>
           <?php
           }
           ?>
@@ -194,82 +194,82 @@ require_once("config/koneksi.php");
 
 
     <!-- ======= Jenis Ayam Section ======= -->
-<section id="jenis_ayam" class="services">
-  <div class="container" data-aos="fade-up">
+    <section id="jenis_ayam" class="services">
+      <div class="container" data-aos="fade-up">
 
-    <div class="section-title">
-      <h2>Jenis Ayam KUB</h2>
-      <p>Berikut adalah beberapa jenis ayam Kampung Unggul Balitbangtan (KUB) yang tersedia:</p>
-    </div>
-
-    <div class="row jenis_ayam-container">
-      <?php
-        $stmt = $koneksi->query("SELECT * FROM ayam");
-        while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-      ?>
-      <div class="col-lg-4 col-md-6 d-flex align-items-stretch jenis_ayam-item">
-        <div class="icon-box">
-          <div class="icon"><img src="admonly/<?php echo htmlspecialchars($result['gambar']); ?>" alt="Ayam KUB" class="img-fluid"></div>
-          <h4 class="title"><?php echo htmlspecialchars($result['nama']); ?></h4>
-          <p class="description"><?php echo htmlspecialchars($result['deskripsi']); ?></p>
+        <div class="section-title">
+          <h2>Jenis Ayam KUB</h2>
+          <p>Berikut adalah beberapa jenis ayam Kampung Unggul Balitbangtan (KUB) yang tersedia:</p>
         </div>
-      </div>
-      <?php
-        }
-      ?>
-    </div>
 
-  </div>
-</section><!-- End Jenis Ayam Section -->
+        <div class="row jenis_ayam-container">
+          <?php
+          $stmt = $koneksi->query("SELECT * FROM ayam");
+          while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+          ?>
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch jenis_ayam-item">
+              <div class="icon-box">
+                <div class="icon"><img src="admonly/<?php echo htmlspecialchars($result['gambar']); ?>" alt="Ayam KUB" class="img-fluid"></div>
+                <h4 class="title"><?php echo htmlspecialchars($result['nama']); ?></h4>
+                <p class="description"><?php echo htmlspecialchars($result['deskripsi']); ?></p>
+              </div>
+            </div>
+          <?php
+          }
+          ?>
+        </div>
+
+      </div>
+    </section><!-- End Jenis Ayam Section -->
 
 
     <!-- ======= Distribusi Section ======= -->
-<section id="distribusi" class="distribusi">
-  <div class="container" data-aos="fade-up">
+    <section id="distribusi" class="distribusi">
+      <div class="container" data-aos="fade-up">
 
-    <div class="section-title">
-      <h2>Distribusi</h2>
-      <p>Distribusi Ayam KUB kami mencakup berbagai wilayah di Sumatera Utara, memastikan bahwa ayam berkualitas tinggi dapat diperoleh oleh para peternak dengan mudah dan cepat.</p>
-    </div>
+        <div class="section-title">
+          <h2>Distribusi</h2>
+          <p>Distribusi Ayam KUB kami mencakup berbagai wilayah di Sumatera Utara, memastikan bahwa ayam berkualitas tinggi dapat diperoleh oleh para peternak dengan mudah dan cepat.</p>
+        </div>
 
-    <div class="row">
-      <div class="col-lg-6">
-        <img src="assets/img/distribusi.jpg" class="img-fluid" alt="">
+        <div class="row">
+          <div class="col-lg-6">
+            <img src="assets/img/distribusi.jpg" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0 content">
+            <h3>Jaringan Distribusi</h3>
+            <p class="fst-italic">
+              Kami memiliki jaringan distribusi yang luas dan terpercaya, memastikan bahwa Ayam KUB dapat diakses oleh peternak di berbagai wilayah.
+            </p>
+            <ul>
+              <li><i class="bi bi-check-circle"></i> Pengiriman cepat dan aman.</li>
+              <li><i class="bi bi-check-circle"></i> Kualitas ayam terjaga selama proses pengiriman.</li>
+              <li><i class="bi bi-check-circle"></i> Jangkauan distribusi mencakup berbagai kabupaten.</li>
+            </ul>
+            <p>
+              Dengan dukungan jaringan distribusi yang kuat, kami memastikan bahwa Ayam KUB kami dapat membantu meningkatkan produktivitas dan kesejahteraan peternak di seluruh wilayah Sumatera Utara.
+            </p>
+          </div>
+        </div>
+
       </div>
-      <div class="col-lg-6 pt-4 pt-lg-0 content">
-        <h3>Jaringan Distribusi</h3>
-        <p class="fst-italic">
-          Kami memiliki jaringan distribusi yang luas dan terpercaya, memastikan bahwa Ayam KUB dapat diakses oleh peternak di berbagai wilayah.
-        </p>
-        <ul>
-          <li><i class="bi bi-check-circle"></i> Pengiriman cepat dan aman.</li>
-          <li><i class="bi bi-check-circle"></i> Kualitas ayam terjaga selama proses pengiriman.</li>
-          <li><i class="bi bi-check-circle"></i> Jangkauan distribusi mencakup berbagai kabupaten.</li>
-        </ul>
-        <p>
-          Dengan dukungan jaringan distribusi yang kuat, kami memastikan bahwa Ayam KUB kami dapat membantu meningkatkan produktivitas dan kesejahteraan peternak di seluruh wilayah Sumatera Utara.
-        </p>
+    </section><!-- End Distribusi Section -->
+
+    <section id="alur" class="alur">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Alur Pemesanan</h2>
+          <p>Berikut adalah alur pemesanan di SIYAKUB BSIP Sumut</p>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6">
+            <img src="assets/img/siyakub.jpg" class="img-fluid" alt="">
+          </div>
+        </div>
       </div>
-    </div>
-
-  </div>
-</section><!-- End Distribusi Section -->
-
-<section id="alur" class="alur">
-  <div class="container" data-aos="fade-up">
-
-    <div class="section-title">
-      <h2>Alur Pemesanan</h2>
-      <p>Berikut adalah alur pemesanan di SIYAKUB BSIP Sumut</p>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-6">
-        <img src="assets/img/siyakub.jpg" class="img-fluid" alt="">
-      </div>
-    </div>
-  </div>
-</section><!-- End Distribusi Section -->
+    </section><!-- End Distribusi Section -->
 
     <!-- ======= Contact Us Section ======= -->
     <section id="contact" class="contact">
@@ -370,7 +370,7 @@ require_once("config/koneksi.php");
             <form action="forms/newsletter.php" method="post">
               <input type="email" name="email" placeholder="Masukkan email Anda"><input type="submit" name="submit_buletin" value="Daftar">
             </form>
-          </div>          
+          </div>
 
         </div>
       </div>
@@ -378,7 +378,7 @@ require_once("config/koneksi.php");
 
     <div class="container">
       <div class="copyright">
-        &copy;2024 Copyright <strong><span>SIYAKUB</span></strong>. 
+        &copy;2024 Copyright <strong><span>SIYAKUB</span></strong>.
       </div>
       <div class="credits">
         Designed by <a href="https://sumut.bsip.pertanian.go.id/">BSIP Sumut</a>
