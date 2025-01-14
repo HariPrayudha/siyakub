@@ -35,8 +35,8 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'MASUK') {
   <meta content="" name="description">
   <meta content="" name="keywords">
 
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.jpg" rel="apple-touch-icon">
+  <link href="assets/img/logo.png" rel="icon">
+  <link href="assets/img/logo.jpg" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
@@ -88,13 +88,13 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'MASUK') {
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Beranda</a></li>
-          <li><a class="nav-link scrollto" href="#about">Tentang Kami</a></li>
-          <li><a class="nav-link scrollto" href="#portfolio">Portofolio</a></li>
-          <li><a class="nav-link scrollto" href="#jenis_ayam">Jenis Ayam</a></li>
-          <li><a class="nav-link scrollto" href="#distribusi">Distribusi</a></li>
-          <li><a class="nav-link scrollto" href="#alur">Alur Pemesanan</a></li>
-          <li><a class="nav-link scrollto" href="#contact">Kontak Kami</a></li>
+          <li><a class="nav-link scrollto active" href="index.php#hero">Beranda</a></li>
+          <li><a class="nav-link scrollto" href="index.php#about">Tentang Kami</a></li>
+          <li><a class="nav-link scrollto" href="index.php#portfolio">Portofolio</a></li>
+          <li><a class="nav-link scrollto" href="index.php#jenis_ayam">Jenis Ayam</a></li>
+          <li><a class="nav-link scrollto" href="index.php#distribusi">Distribusi</a></li>
+          <li><a class="nav-link scrollto" href="index.php#alur">Alur Pemesanan</a></li>
+          <li><a class="nav-link scrollto" href="index.php#contact">Kontak Kami</a></li>
           <li><a class="nav-link scrollto" href="profile.php">Profile</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>

@@ -31,6 +31,12 @@ if (isset($_POST['submit_keranjang'])) {
     }
   }
 }
+
+if (isset($_GET['action']) && $_GET['action'] == "logout") {
+  session_destroy();
+  header('location: index.php');
+  exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -104,10 +110,19 @@ if (isset($_POST['submit_keranjang'])) {
           <li><a class="nav-link scrollto" href="#distribusi">Distribusi</a></li>
           <li><a class="nav-link scrollto" href="#alur">Alur Pemesanan</a></li>
           <li><a class="nav-link scrollto" href="#contact">Kontak Kami</a></li>
-          <li><a class="nav-link scrollto" href="profile.php">Profile</a></li>
+          <li class="dropdown">
+            <a href="#" class="nav-link">Profile <i class="bi bi-chevron-down"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="profile.php">Profile</a></li>
+              <li><a href="keranjang.php">Keranjang</a></li>
+              <?php if (isset($_SESSION['email'])): ?>
+                <li><a href="index.php?action=logout">Logout</a></li>
+              <?php endif; ?>
+            </ul>
+          </li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+      </nav>
       <a href="index.php"><img src="assets/img/logo2.png" alt="" class="img-fluid" style="height: 50px; margin-left: 10px;"></a>
     </div>
   </header><!-- End Header -->
