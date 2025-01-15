@@ -5,7 +5,7 @@ require_once("config/koneksi.php");
 if (isset($_SESSION['email'])) {
     $email = $_SESSION['email'];
 } else {
-    header('Location: index.php');
+    header('Location: loginus.php');
     exit;
 }
 
@@ -150,7 +150,7 @@ $resi = 'SYKB' . $angka_acak;
                                                                 }; ?>"><?= htmlspecialchars($result['status']); ?></p>
                                 <?php if ($result['status'] !== 'Diterima' && $result['status'] !== 'Dibatalkan' && $result['status'] !== 'Dikirim') { ?>
                                     <?php if ($result['metode'] == 'Bank Transfer' || $result['metode'] == 'E-Wallet') { ?>
-                                        <p>*Silahkan Lakukan Pembayaran* <a href="pembayaran.php" class="btn btn-primary"> LAKUKAN PEMBAYARAN</a></p>
+                                        <p><strong>Silakan Lakukan Pembayaran </strong><a href="pembayaran.php" class="btn btn-primary"> LAKUKAN PEMBAYARAN</a></p>
                                     <?php } ?>
                                     <form method="post" action="">
                                         <input type="hidden" name="id" value="<?= htmlspecialchars($result['id']); ?>">

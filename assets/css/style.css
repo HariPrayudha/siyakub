@@ -1901,6 +1901,127 @@ section {
   color: #dc3545;
 }
 
+.payment {
+  margin-top: 8px; /* Mengurangi jarak atas */
+  min-height: 15vh;
+  background-color: #f9f9f9;
+  padding: 12px; /* Padding lebih kecil */
+}
+
+.payment .title {
+  margin-top: 12px; /* Mengurangi margin atas */
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+}
+
+.payment .box-container {
+  margin-top: 12px; /* Mengurangi jarak atas container */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px; /* Mengurangi jarak antar kotak */
+  padding: 0 8px; /* Padding lebih kecil pada sisi horizontal */
+  max-width: 800px; /* Menambahkan lebar maksimal */
+  margin-left: auto; /* Membuat container rata tengah */
+  margin-right: auto; /* Membuat container rata tengah */
+}
+
+.payment .box-container .box {
+  background-color: #ffffff;
+  border-radius: 16px; /* Mengurangi radius untuk tampilan lebih minimalis */
+  border: 1px solid #e0e0e0;
+  padding: 16px; /* Mengurangi padding dalam box */
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.payment .box-container .box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Efek bayangan lebih lembut */
+}
+
+.payment .box-container .box .date {
+  padding: 6px 10px; /* Padding lebih kecil */
+  color: #ffffff;
+  background-color: #42ca4b;
+  font-size: 14px;
+  display: inline-block;
+  margin-bottom: 12px; /* Mengurangi margin bawah */
+  border-radius: 6px; /* Radius lebih kecil */
+  font-weight: bold;
+}
+
+.payment .box-container .box .date i {
+  margin-right: 6px; /* Margin icon lebih kecil */
+  color: #ffffff;
+}
+
+.payment .box-container .box:hover .date {
+  background-color: #9ef4a4;
+  color: #000000;
+}
+
+.payment .box-container .box:hover .date i {
+  color: #000000;
+}
+
+.payment .box-container .box img {
+  display: block; /* Mengubah gambar menjadi block-level element */
+  margin: 0 auto; /* Memastikan gambar berada di tengah secara horizontal */
+  width: 450px; /* Ukuran lebar gambar yang diinginkan */
+  height: 450px; /* Ukuran tinggi gambar yang diinginkan */
+  object-fit: cover; /* Memastikan gambar tetap proporsional meskipun diubah ukuran */
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.payment .box-container .box .name {
+  font-size: 18px; /* Ukuran font lebih kecil */
+  color: #333333;
+  text-overflow: ellipsis;
+  margin: 12px 0; /* Margin vertikal lebih kecil */
+  overflow: hidden;
+  font-weight: bold;
+}
+
+.payment .box-container .box .price {
+  color: #e63417;
+  font-size: 16px; /* Ukuran font lebih kecil */
+  padding: 4px 0; /* Padding vertikal lebih kecil */
+  font-weight: bold;
+}
+
+.payment .box-container .box .status {
+  padding-top: 6px; /* Padding atas lebih kecil */
+  font-size: 15px; /* Ukuran font lebih kecil */
+  font-weight: bold;
+  color: #6c757d;
+}
+
+.payment .box-container .box .status.accepted {
+  color: #28a745;
+}
+
+.payment .box-container .box .status.cancelled {
+  color: #dc3545;
+}
+
+.payment .box-container .box input[type="submit"] {
+  display: block; /* Mengubah tombol menjadi block-level element */
+  margin: 20px auto; /* Memberikan margin otomatis agar tombol berada di tengah */
+  padding: 10px 20px; /* Menambahkan padding untuk tombol */
+  background-color: #42ca4b; /* Warna latar belakang tombol */
+  color: white; /* Warna teks tombol */
+  border: none; /* Menghapus border default */
+  border-radius: 10px; /* Memberikan sudut radius pada tombol */
+  cursor: pointer; /* Menambahkan pointer saat hover */
+  font-size: 16px; /* Ukuran font tombol */
+}
+
+.payment .box-container .box input[type="submit"]:hover {
+  background-color: #9ef4a4; /* Warna latar belakang saat hover */
+}
+
 
 #footer {
   background: #588760;
