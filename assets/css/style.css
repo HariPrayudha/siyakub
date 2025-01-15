@@ -1629,7 +1629,7 @@ section {
 
 .user-details .user {
   background-color: #ffffff;
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
   border: 1px solid #ddd;
   border-radius: 10px;
@@ -1640,7 +1640,7 @@ section {
 
 .user-details .user img {
   width: 100%;
-  height: 250px;
+  height: 350px;
   object-fit: cover;
   border-radius: 10px;
   margin-bottom: 16px;
@@ -1712,6 +1712,92 @@ section {
 .user-details .user .button-group .btn {
   flex: 1; /* Atur tombol agar fleksibel dengan lebar yang seimbang */
   max-width: 200px; /* Batasi lebar maksimal tombol */
+}
+
+.update-form {
+  display: flex;
+  flex-direction: column; /* Pastikan konten ditumpuk secara vertikal */
+  justify-content: center; /* Pusatkan secara vertikal */
+  align-items: center; /* Pusatkan secara horizontal */
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  margin: auto; 
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+/* Heading */
+.update-form h3 {
+  font-size: 24px;
+  color: #42ca4b; /* Sesuaikan dengan warna utama */
+  margin-bottom: 20px;
+}
+
+/* Input fields styling */
+.update-form .box {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #f9fff7; /* Latar belakang input */
+  color: #444;
+  transition: border-color 0.3s ease;
+}
+
+.update-form .box:focus {
+  border-color: #42ca4b; /* Highlight border saat fokus */
+  outline: none;
+}
+
+/* Gambar input styling */
+.update-form input[type="file"] {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #f9fff7;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* Button styling */
+.update-form .btn {
+  background-color: #42ca4b;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.update-form .btn:hover {
+  background-color: #9ef4a4; /* Warna hover */
+  color: #333;
+}
+
+/* Kembali ke profil link */
+.update-form a {
+  text-decoration: none;
+  color: #42ca4b;
+  font-size: 16px;
+  margin-bottom: 20px;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.update-form a:hover {
+  color: #9ef4a4;
 }
 
 #footer {
