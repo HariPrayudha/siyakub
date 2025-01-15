@@ -1802,7 +1802,7 @@ section {
 
 .orders {
   margin-top: 8px; /* Mengurangi jarak atas */
-  min-height: 100vh;
+  min-height: 15vh;
   background-color: #f9f9f9;
   padding: 12px; /* Padding lebih kecil */
 }
