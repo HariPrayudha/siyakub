@@ -2,24 +2,89 @@
 session_start();
 require_once("config/koneksi.php");
 
-if (isset($_POST['submit']) && $_POST['submit'] == 'MASUK') {
+if (isset($_POST['submit_pesanan'])) {
+    $nama = $_POST['nama'];
+    $nomor = $_POST['nomor'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
-    if (empty($email) || empty($password)) {
-        echo "<meta http-equiv='refresh' content='0; url=loginus.php'>";
-    } else {
-        $stmt = $koneksi->prepare("SELECT * FROM user WHERE email = :email AND password = :password");
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($result) {
-            $_SESSION['email'] = $email;
-            header('location:index.php');
-            echo '<div class="success">Login Berhasil</div>';
+    $metode = $_POST['metode'];
+    $alamat = $_POST['alamat'];
+    $jalan = $_POST['jalan'];
+    $kota = $_POST['kota'];
+    $provinsi = $_POST['provinsi'];
+    $negara = $_POST['negara'];
+    $kode_pos = $_POST['kode_pos'];
+
+    try {
+        // Ambil data dari keranjang
+        $query_keranjang = $koneksi->query("SELECT * FROM keranjang");
+        $items = $query_keranjang->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($items) {
+            $total_harga = 0;
+            $nama_produk = [];
+
+            foreach ($items as $item) {
+                $nama_produk[] = $item['nama'] . ' (' . $item['jumlah'] . ')';
+                $sub_harga = $item['harga'] * $item['jumlah'];
+                $total_harga += $sub_harga;
+            }
+
+            $total_produk = implode(', ', $nama_produk);
+
+            // Masukkan data ke tabel pesanan
+            $stmt = $koneksi->prepare("
+                INSERT INTO pesanan 
+                (nama, nomor, email, metode, alamat, jalan, kota, provinsi, negara, kode_pos, total_produk, total_harga)
+                VALUES (:nama, :nomor, :email, :metode, :alamat, :jalan, :kota, :provinsi, :negara, :kode_pos, :total_produk, :total_harga)
+            ");
+            $stmt->execute([
+                ':nama' => $nama,
+                ':nomor' => $nomor,
+                ':email' => $email,
+                ':metode' => $metode,
+                ':alamat' => $alamat,
+                ':jalan' => $jalan,
+                ':kota' => $kota,
+                ':provinsi' => $provinsi,
+                ':negara' => $negara,
+                ':kode_pos' => $kode_pos,
+                ':total_produk' => $total_produk,
+                ':total_harga' => $total_harga,
+            ]);
+
+            // Tampilkan pesan sukses
+            echo "
+            <div class='order-message-container'>
+                <div class='message-container'>
+                    <h3>TERIMA KASIH SUDAH ORDER!!</h3>
+                    <div class='order-detail'>
+                        <span>{$total_produk}</span>
+                        <span class='total'> Total Harga : Rp." . number_format($total_harga) . "</span>
+                    </div>
+                    <div class='customer-details'>
+                        <p> Nama : <span>{$nama}</span> </p>
+                        <p> Nomor : <span>{$nomor}</span> </p>
+                        <p> Email : <span>{$email}</span> </p>
+                        <p> Alamat : <span>{$alamat}, {$jalan}, {$kota}, {$provinsi}, {$negara} - {$kode_pos}</span> </p>
+                        <p> Metode Pembayaran : <span>{$metode}</span> </p>
+                    </div>
+                    <a href='index.php#jenis_ayam' class='btn btn-warning'>Lanjut Berbelanja</a>
+                    <a href='profile.php' class='btn btn-primary'>Ke Akun Saya</a>
+                </div>
+            </div>";
+
+            // Hapus semua data dari keranjang
+            $koneksi->query("DELETE FROM keranjang");
         } else {
-            echo '<div class="error">Email atau Password Salah</div>';
+            echo "<div class='order-message-container'>
+                    <div class='message-container'>
+                        <h3>KERANJANG ANDA MASIH KOSONG!!!</h3>
+                        <a href='index.php#jenis_ayam' class='btn btn-warning'>Belanja Sekarang</a>
+                    </div>
+                  </div>";
         }
+    } catch (PDOException $e) {
+        die("Terjadi kesalahan: " . $e->getMessage());
     }
 }
 ?>
@@ -40,6 +105,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'MASUK') {
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
@@ -113,14 +179,87 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'MASUK') {
     </header><!-- End Header -->
 
     <main>
-        <div class="form-containerr">
-            <form action="" method="post">
-                <h3 class="title">Login User</h3>
-                <input type="email" name="email" placeholder="Masukkan Email" class="box" required>
-                <input type="password" name="password" placeholder="Masukkan Password" class="box" required>
-                <input type="submit" value="MASUK" class="form-btn" name="submit">
-                <p>Tidak Punya Akun? <a href="registeruser.php">DAFTAR</a></p>
-            </form>
+        <div class="container">
+            <section class="checkout-form">
+                <h1 class="heading" align="center">CHECKOUT PRODUCT</h1>
+                <form action="" method="post">
+                    <div class="display-order">
+                        <?php
+                        $total = 0;
+                        $total_akhir = 0;
+                        $sub_harga = 0;
+
+                        try {
+                            $query = $koneksi->query("SELECT * FROM keranjang");
+                            $items = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                            if ($items) {
+                                foreach ($items as $item) {
+                                    $sub_harga = $item['harga'] * $item['jumlah'];
+                                    $total_akhir = $total += $sub_harga;
+                                    echo "<span>{$item['nama']} ({$item['jumlah']})</span>";
+                                }
+                            } else {
+                                echo "<div class='display-order'><span>KERANJANG ANDA MASIH KOSONG!!!</span></div>";
+                            }
+                        } catch (PDOException $e) {
+                            echo "<div class='error'>Terjadi kesalahan: {$e->getMessage()}</div>";
+                        }
+                        ?>
+                        <span class="grand-total"> Total Harga : Rp.<?php echo number_format($total_akhir); ?></span>
+                    </div>
+
+                    <div class="flex">
+                        <div class="inputBox">
+                            <span>Nama Anda</span>
+                            <input type="text" placeholder="Masukkan Nama Anda" name="nama" required>
+                        </div>
+                        <div class="inputBox">
+                            <span>Nomor Anda</span>
+                            <input type="text" placeholder="Masukkan Nomor Anda" name="nomor" required>
+                        </div>
+                        <div class="inputBox">
+                            <span>Email Anda</span>
+                            <input type="email" placeholder="Masukkan Email Anda" name="email" required>
+                        </div>
+                        <div class="inputBox">
+                            <span>Metode Pembayaran</span>
+                            <select name="metode">
+                                <option value="COD" selected>COD</option>
+                                <option value="E-Wallet">E-Wallet</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                            </select>
+                        </div>
+                        <div class="inputBox">
+                            <span>Alamat</span>
+                            <input type="text" placeholder="Masukkan Nama Jalan" name="alamat" required>
+                        </div>
+                        <div class="inputBox">
+                            <span>Detail Alamat</span>
+                            <input type="text" placeholder="Masukkan Nomor Rumah" name="jalan" required>
+                        </div>
+                        <div class="inputBox">
+                            <span>Kota</span>
+                            <input type="text" placeholder="Masukkan Kota" name="kota" required>
+                        </div>
+                        <div class="inputBox">
+                            <span>Provinsi</span>
+                            <input type="text" placeholder="Masukkan Provinsi" name="provinsi" required>
+                        </div>
+                        <div class="inputBox">
+                            <span>Negara</span>
+                            <input type="text" placeholder="Masukkan Negara" name="negara" required>
+                        </div>
+                        <div class="inputBox">
+                            <span>Kode Pos</span>
+                            <input type="text" placeholder="Masukkan Kode Pos" name="kode_pos" required>
+                        </div>
+                    </div>
+                    <div class="checkout-btn">
+                        <input type="submit" value="PESAN SEKARANG" name="submit_pesanan" class="btn btn-success">
+                    </div>
+                </form>
+            </section>
         </div>
     </main>
 

@@ -121,7 +121,16 @@ if (isset($_GET['action'])) {
                     <li><a class="nav-link scrollto" href="index.php#distribusi">Distribusi</a></li>
                     <li><a class="nav-link scrollto" href="index.php#alur">Alur Pemesanan</a></li>
                     <li><a class="nav-link scrollto" href="index.php#contact">Kontak Kami</a></li>
-                    <li><a class="nav-link scrollto" href="profile.php">Profile</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link">Profile <i class="bi bi-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="profile.php">Profile</a></li>
+                            <li><a href="keranjang.php">Keranjang</a></li>
+                            <?php if (isset($_SESSION['email'])): ?>
+                                <li><a href="index.php?action=logout">Logout</a></li>
+                            <?php endif; ?>
+                        </ul>
+                    </li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -155,7 +164,7 @@ if (isset($_GET['action'])) {
                                 $total_akhir += $sub_harga;
                         ?>
                                 <tr>
-                                    <td><img src="admonly/gambar/<?php echo htmlspecialchars($result['gambar']); ?>" height="100" alt=""></td>
+                                    <td><img src="admonly/<?php echo htmlspecialchars($result['gambar']); ?>" height="100" alt=""></td>
                                     <td><?php echo htmlspecialchars($result['nama']); ?></td>
                                     <td>Rp.<?php echo number_format($result['harga']); ?></td>
                                     <td>
@@ -174,7 +183,7 @@ if (isset($_GET['action'])) {
                         ?>
 
                         <tr class="table-bottom">
-                            <td><a href="index.php" class="btn btn-warning" style="margin-top: 0;"> <i class="fa fa-shopping-cart"></i> KEMBALI BERBELANJA</a></td>
+                            <td><a href="index.php#jenis_ayam" class="btn btn-warning" style="margin-top: 0;"> <i class="fa fa-shopping-cart"></i> KEMBALI BERBELANJA</a></td>
                             <td colspan="3">Total Harga</td>
                             <td>Rp.<?php echo number_format($total_akhir); ?></td>
                             <td><a href="keranjang.php?action=hapus_semua&id=" onclick="return confirm('Yakin ingin menghapus semua produk?');" class="btn btn-danger <?= ($total_akhir > 1) ? '' : 'disabled'; ?>"> <i class="fa fa-trash"></i> HAPUS SEMUA </a></td>

@@ -98,28 +98,37 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'DAFTAR SEKARANG') {
 
     <!-- ======= Header ======= -->
     <header id="header" class="d-flex align-items-center">
-    <div class="container d-flex align-items-center">
+        <div class="container d-flex align-items-center">
 
-      <div class="logo me-auto">
-        <h1><a href="index.php"><img src="assets/img/logo.png" alt="" class="img-fluid"> SIYAKUB</a></h1>
-      </div>
+            <div class="logo me-auto">
+                <h1><a href="index.php"><img src="assets/img/logo.png" alt="" class="img-fluid"> SIYAKUB</a></h1>
+            </div>
 
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="nav-link scrollto active" href="index.php#hero">Beranda</a></li>
-          <li><a class="nav-link scrollto" href="index.php#about">Tentang Kami</a></li>
-          <li><a class="nav-link scrollto" href="index.php#portfolio">Portofolio</a></li>
-          <li><a class="nav-link scrollto" href="index.php#jenis_ayam">Jenis Ayam</a></li>
-          <li><a class="nav-link scrollto" href="index.php#distribusi">Distribusi</a></li>
-          <li><a class="nav-link scrollto" href="index.php#alur">Alur Pemesanan</a></li>
-          <li><a class="nav-link scrollto" href="index.php#contact">Kontak Kami</a></li>
-          <li><a class="nav-link scrollto" href="profile.php">Profile</a></li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
-      <a href="index.php"><img src="assets/img/logo2.png" alt="" class="img-fluid" style="height: 50px; margin-left: 10px;"></a>
-    </div>
-  </header><!-- End Header -->
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto active" href="index.php#hero">Beranda</a></li>
+                    <li><a class="nav-link scrollto" href="index.php#about">Tentang Kami</a></li>
+                    <li><a class="nav-link scrollto" href="index.php#portfolio">Portofolio</a></li>
+                    <li><a class="nav-link scrollto" href="index.php#jenis_ayam">Jenis Ayam</a></li>
+                    <li><a class="nav-link scrollto" href="index.php#distribusi">Distribusi</a></li>
+                    <li><a class="nav-link scrollto" href="index.php#alur">Alur Pemesanan</a></li>
+                    <li><a class="nav-link scrollto" href="index.php#contact">Kontak Kami</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link">Profile <i class="bi bi-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="profile.php">Profile</a></li>
+                            <li><a href="keranjang.php">Keranjang</a></li>
+                            <?php if (isset($_SESSION['email'])): ?>
+                                <li><a href="index.php?action=logout">Logout</a></li>
+                            <?php endif; ?>
+                        </ul>
+                    </li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+            <a href="index.php"><img src="assets/img/logo2.png" alt="" class="img-fluid" style="height: 50px; margin-left: 10px;"></a>
+        </div>
+    </header><!-- End Header -->
 
     <main>
         <div class="form-containerr">
