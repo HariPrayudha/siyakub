@@ -2,81 +2,33 @@
 session_start();
 require_once("config/koneksi.php");
 
-// Cek apakah pengguna sudah login (misalnya berdasarkan session email)
-if (!isset($_SESSION['email'])) {
-    header('Location: loginus.php');
+if (isset($_SESSION['email'])) {
+    $email = $_SESSION['email'];
+} else {
+    header('Location: index.php');
     exit;
 }
 
-$email = $_SESSION['email'];
+// Jika tombol "BATALKAN PESANAN" ditekan
+if (isset($_POST['batal'])) {
+    $idPesanan = $_POST['id']; // Ambil ID pesanan dari form
+    try {
+        $stmt = $koneksi->prepare("UPDATE pesanan SET status = 'Dibatalkan' WHERE id = :id AND email = :email");
+        $stmt->execute(['id' => $idPesanan, 'email' => $email]);
 
-// Ambil data pengguna dari database
-$sql = "SELECT * FROM user WHERE email = :email"; // Ganti dengan nama tabel yang benar jika perlu
-$stmt = $koneksi->prepare($sql);
-$stmt->execute(['email' => $email]);
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-// Cek apakah data ditemukan
-if (!$result) {
-    echo '<div class="error">Data pengguna tidak ditemukan.</div>';
-    exit;
-}
-
-// Jika form disubmit
-if (isset($_POST['edit_profil'])) {
-    $gambar = $_FILES['gambar'];
-    $nama = $_POST['nama'];
-    $no_telp = $_POST['no_telp'];
-    $alamat = $_POST['alamat'];
-    
-    if ($gambar['name'] != "") {
-        $ekstensi_diperbolehkan = array('png', 'jpg');
-        $x = explode('.', $gambar['name']);
-        $ekstensi = strtolower(end($x));
-        $file_tmp = $gambar['tmp_name'];
-        $angka_acak = rand(1, 999);
-        $nama_gambar_baru = $angka_acak . '-' . $gambar['name'];
-
-        if (in_array($ekstensi, $ekstensi_diperbolehkan)) {
-            move_uploaded_file($file_tmp, 'gambar/' . $nama_gambar_baru);
-
-            // Update data pengguna
-            $sql = "UPDATE user SET gambar = :gambar, nama = :nama, no_telp = :no_telp, alamat = :alamat WHERE email = :email";
-            $stmt = $koneksi->prepare($sql);
-            $update = $stmt->execute([
-                'gambar' => $nama_gambar_baru,
-                'nama' => $nama,
-                'no_telp' => $no_telp,
-                'alamat' => $alamat,
-                'email' => $email
-            ]);
-
-            if ($update) {
-                echo '<div class="success">Profil Berhasil Diedit</div>';
-            } else {
-                echo '<div class="error">Profil Gagal Diedit</div>';
-            }
+        if ($stmt->rowCount() > 0) {
+            echo '<div class="success">Pesanan Berhasil Dibatalkan</div>';
         } else {
-            echo '<div class="error">Ekstensi gambar tidak diperbolehkan.</div>';
+            echo '<div class="error">Pesanan Gagal Dibatalkan</div>';
         }
-    } else {
-        // Update tanpa mengganti gambar
-        $sql = "UPDATE user SET nama = :nama, no_telp = :no_telp, alamat = :alamat WHERE email = :email";
-        $stmt = $koneksi->prepare($sql);
-        $update = $stmt->execute([
-            'nama' => $nama,
-            'no_telp' => $no_telp,
-            'alamat' => $alamat,
-            'email' => $email
-        ]);
-
-        if ($update) {
-            echo '<div class="success">Profil Berhasil Diedit</div>';
-        } else {
-            echo '<div class="error">Profil Gagal Diedit</div>';
-        }
+    } catch (PDOException $e) {
+        echo '<div class="error">Terjadi Kesalahan: ' . htmlspecialchars($e->getMessage()) . '</div>';
     }
 }
+
+// Nomor resi acak
+$angka_acak = rand(1, 999999999);
+$resi = 'SYKB' . $angka_acak;
 ?>
 
 <!DOCTYPE html>
@@ -169,17 +121,56 @@ if (isset($_POST['edit_profil'])) {
     </header><!-- End Header -->
 
     <main>
-        <section class="update-form">
-            <form action="" method="post" enctype="multipart/form-data">
-                <a href="profile.php">
-                    << Kembali Ke Profil User </a>
-                        <h3>Edit Profil</h3>
-                        <input type="file" name="gambar" placeholder="Masukkan Foto Anda" class="box" maxlength="50">
-                        <input type="text" name="nama" placeholder="Masukkan Nama Anda" value="<?php echo htmlspecialchars($result['nama']); ?>" class="box" maxlength="50">
-                        <input type="number" name="no_telp" placeholder="Masukkan Nomor Telp Anda" value="<?php echo htmlspecialchars($result['no_telp']); ?>" class="box" maxlength="50">
-                        <input type="text" name="alamat" placeholder="Masukkan Alamat Anda" value="<?php echo htmlspecialchars($result['alamat']); ?>" class="box" maxlength="50">
-                        <input type="submit" value="Edit Sekarang" name="edit_profil" class="btn btn-primary">
-            </form>
+        <section class="orders">
+            <div class="box-container">
+                <?php
+                try {
+                    $stmt = $koneksi->prepare("SELECT * FROM `pesanan` WHERE email = :email");
+                    $stmt->execute(['email' => $email]);
+                    $pesanan = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    if ($pesanan) {
+                        foreach ($pesanan as $result) {
+                ?>
+                            <div class="box"><br><br>
+                                <p class="date"><i class="fa fa-calendar"></i><span><?= htmlspecialchars(date('d-m-Y', strtotime($result['tanggal_checkout']))); ?></span></p>
+                                <p><i class="fa fa-user"></i> Nama : <span><?= htmlspecialchars($result['nama']); ?></span></p>
+                                <p><i class="fa fa-phone"></i> Nomor : <span><?= htmlspecialchars($result['nomor']); ?></span></p>
+                                <p><i class="fa fa-envelope"></i> Email : <span><?= htmlspecialchars($result['email']); ?></span></p>
+                                <p><i class="fa fa-map-marker"></i> Alamat : <span><?= htmlspecialchars($result['alamat'] . ' ' . $result['jalan'] . ' ' . $result['kota'] . ' ' . $result['provinsi'] . ' ' . $result['negara'] . ' ' . $result['kode_pos']); ?></span></p>
+                                <p><i class="fa fa-credit-card"></i> Metode Pembayaran : <span><?= htmlspecialchars($result['metode']); ?></span></p>
+                                <p><i class="fa fa-shopping-cart"></i> Pesanan Kamu : <span><?= htmlspecialchars($result['total_produk']); ?></span></p>
+                                <p><i class="fa fa-money"></i> Total Harga : <span>Rp.<?= number_format($result['total_harga']); ?></span></p>
+                                <p class="status" style="color:<?php if ($result['status'] == 'Diterima') {
+                                                                    echo 'green';
+                                                                } elseif ($result['status'] == 'Dibatalkan') {
+                                                                    echo 'red';
+                                                                } else {
+                                                                    echo 'orange';
+                                                                }; ?>"><?= htmlspecialchars($result['status']); ?></p>
+                                <?php if ($result['status'] !== 'Diterima' && $result['status'] !== 'Dibatalkan' && $result['status'] !== 'Dikirim') { ?>
+                                    <?php if ($result['metode'] == 'Bank Transfer' || $result['metode'] == 'E-Wallet') { ?>
+                                        <p>*Silahkan Lakukan Pembayaran* <a href="pembayaran.php" class="btn btn-primary"> LAKUKAN PEMBAYARAN</a></p>
+                                    <?php } ?>
+                                    <form method="post" action="">
+                                        <input type="hidden" name="id" value="<?= htmlspecialchars($result['id']); ?>">
+                                        <input type="submit" value="BATALKAN PESANAN" name="batal" class="btn btn-danger">
+                                    </form>
+                                <?php } ?>
+                                <?php if ($result['status'] !== 'Verifikasi Pembayaran') { ?>
+                                    <p>NOMOR RESI: <?= $resi ?></p>
+                                <?php } ?>
+                            </div>
+                <?php
+                        }
+                    } else {
+                        echo '<p class="empty">Tidak Ada Pesanan</p>';
+                    }
+                } catch (PDOException $e) {
+                    echo '<div class="error">Terjadi Kesalahan: ' . htmlspecialchars($e->getMessage()) . '</div>';
+                }
+                ?>
+            </div>
         </section>
     </main>
 
@@ -251,7 +242,6 @@ if (isset($_POST['edit_profil'])) {
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
-
 </body>
 
 </html>

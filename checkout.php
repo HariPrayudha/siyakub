@@ -13,6 +13,7 @@ if (isset($_POST['submit_pesanan'])) {
     $provinsi = $_POST['provinsi'];
     $negara = $_POST['negara'];
     $kode_pos = $_POST['kode_pos'];
+    $tanggal_checkout = $_POST['tanggal_checkout'];
 
     try {
         // Ambil data dari keranjang
@@ -34,8 +35,8 @@ if (isset($_POST['submit_pesanan'])) {
             // Masukkan data ke tabel pesanan
             $stmt = $koneksi->prepare("
                 INSERT INTO pesanan 
-                (nama, nomor, email, metode, alamat, jalan, kota, provinsi, negara, kode_pos, total_produk, total_harga)
-                VALUES (:nama, :nomor, :email, :metode, :alamat, :jalan, :kota, :provinsi, :negara, :kode_pos, :total_produk, :total_harga)
+                (nama, nomor, email, metode, alamat, jalan, kota, provinsi, negara, kode_pos, total_produk, total_harga, tanggal_checkout)
+                VALUES (:nama, :nomor, :email, :metode, :alamat, :jalan, :kota, :provinsi, :negara, :kode_pos, :total_produk, :total_harga, :tanggal_checkout)
             ");
             $stmt->execute([
                 ':nama' => $nama,
@@ -50,6 +51,7 @@ if (isset($_POST['submit_pesanan'])) {
                 ':kode_pos' => $kode_pos,
                 ':total_produk' => $total_produk,
                 ':total_harga' => $total_harga,
+                ':tanggal_checkout' => $tanggal_checkout,
             ]);
 
             // Tampilkan pesan sukses
@@ -212,6 +214,7 @@ if (isset($_POST['submit_pesanan'])) {
                     </div>
 
                     <div class="flex">
+                        <input type="hidden" name="tanggal_checkout" value="<?php echo date('Y-m-d'); ?>">
                         <div class="inputBox">
                             <span>Nama Anda</span>
                             <input type="text" placeholder="Masukkan Nama Anda" name="nama" required>
