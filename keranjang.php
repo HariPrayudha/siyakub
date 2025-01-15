@@ -196,7 +196,7 @@ if (isset($_GET['action'])) {
                     if (isset($_SESSION['email'])) {
                         echo '<a href="checkout.php" class="btn btn-primary' . ($total_akhir > 1 ? '' : ' disabled') . '">PROSES KE CHECKOUT</a>';
                     } else {
-                        echo '<p>SILAHKAN LOGIN UNTUK MELANJUTKAN KE CHECKOUT <br><br> <a href="loginus.php" class="btn btn-primary">LOGIN</a></p>';
+                        echo '<p style="color: black">SILAHKAN LOGIN UNTUK MELANJUTKAN KE CHECKOUT <br><br> <a href="loginus.php" class="btn btn-primary">LOGIN</a></p>';
                     }
                     ?>
                 </div>
