@@ -104,15 +104,11 @@ if (isset($_SESSION['email'])) {
             <div class="user">
                 <?php
                 try {
-                    // Query menggunakan prepared statement
                     $query = "SELECT * FROM user WHERE email = :email";
-                    $stmt = $koneksi->prepare($query); // Menggunakan instance $koneksi dari file koneksi.php
+                    $stmt = $koneksi->prepare($query);
                     $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-
-                    // Menjalankan query
                     $stmt->execute();
 
-                    // Mengambil hasil query
                     while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 ?>
                         <img src="gambar/<?php echo htmlspecialchars($result['gambar']); ?>" alt="User Image">

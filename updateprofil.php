@@ -2,7 +2,6 @@
 session_start();
 require_once("config/koneksi.php");
 
-// Cek apakah pengguna sudah login (misalnya berdasarkan session email)
 if (!isset($_SESSION['email'])) {
     header('Location: loginus.php');
     exit;
@@ -10,19 +9,16 @@ if (!isset($_SESSION['email'])) {
 
 $email = $_SESSION['email'];
 
-// Ambil data pengguna dari database
-$sql = "SELECT * FROM user WHERE email = :email"; // Ganti dengan nama tabel yang benar jika perlu
+$sql = "SELECT * FROM user WHERE email = :email";
 $stmt = $koneksi->prepare($sql);
 $stmt->execute(['email' => $email]);
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Cek apakah data ditemukan
 if (!$result) {
     echo '<div class="error">Data pengguna tidak ditemukan.</div>';
     exit;
 }
 
-// Jika form disubmit
 if (isset($_POST['edit_profil'])) {
     $gambar = $_FILES['gambar'];
     $nama = $_POST['nama'];
@@ -40,7 +36,6 @@ if (isset($_POST['edit_profil'])) {
         if (in_array($ekstensi, $ekstensi_diperbolehkan)) {
             move_uploaded_file($file_tmp, 'gambar/' . $nama_gambar_baru);
 
-            // Update data pengguna
             $sql = "UPDATE user SET gambar = :gambar, nama = :nama, no_telp = :no_telp, alamat = :alamat WHERE email = :email";
             $stmt = $koneksi->prepare($sql);
             $update = $stmt->execute([
@@ -60,7 +55,6 @@ if (isset($_POST['edit_profil'])) {
             echo '<div class="error">Ekstensi gambar tidak diperbolehkan.</div>';
         }
     } else {
-        // Update tanpa mengganti gambar
         $sql = "UPDATE user SET nama = :nama, no_telp = :no_telp, alamat = :alamat WHERE email = :email";
         $stmt = $koneksi->prepare($sql);
         $update = $stmt->execute([

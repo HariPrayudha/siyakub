@@ -16,7 +16,6 @@ if (isset($_POST['submit_pesanan'])) {
     $tanggal_checkout = $_POST['tanggal_checkout'];
 
     try {
-        // Ambil data dari keranjang
         $query_keranjang = $koneksi->query("SELECT * FROM keranjang");
         $items = $query_keranjang->fetchAll(PDO::FETCH_ASSOC);
 
@@ -32,7 +31,6 @@ if (isset($_POST['submit_pesanan'])) {
 
             $total_produk = implode(', ', $nama_produk);
 
-            // Masukkan data ke tabel pesanan
             $stmt = $koneksi->prepare("
                 INSERT INTO pesanan 
                 (nama, nomor, email, metode, alamat, jalan, kota, provinsi, negara, kode_pos, total_produk, total_harga, tanggal_checkout)
@@ -54,7 +52,6 @@ if (isset($_POST['submit_pesanan'])) {
                 ':tanggal_checkout' => $tanggal_checkout,
             ]);
 
-            // Tampilkan pesan sukses
             echo "
             <div class='order-message-container'>
                 <div class='message-container'>
@@ -77,7 +74,6 @@ if (isset($_POST['submit_pesanan'])) {
                 </div>
             </div>";
 
-            // Hapus semua data dari keranjang
             $koneksi->query("DELETE FROM keranjang");
         } else {
             echo "<div class='order-message-container'>

@@ -9,9 +9,8 @@ if (isset($_SESSION['email'])) {
     exit;
 }
 
-// Jika tombol "BATALKAN PESANAN" ditekan
 if (isset($_POST['batal'])) {
-    $idPesanan = $_POST['id']; // Ambil ID pesanan dari form
+    $idPesanan = $_POST['id'];
     try {
         $stmt = $koneksi->prepare("UPDATE pesanan SET status = 'Dibatalkan' WHERE id = :id AND email = :email");
         $stmt->execute(['id' => $idPesanan, 'email' => $email]);

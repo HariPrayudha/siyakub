@@ -13,14 +13,12 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'DAFTAR SEKARANG') {
         echo '<div class="error">Semua field harus diisi!</div>';
     } else {
         try {
-            // Periksa apakah email sudah terdaftar
             $stmt = $koneksi->prepare("SELECT * FROM user WHERE email = :email");
             $stmt->bindParam(':email', $email);
             $stmt->execute();
             if ($stmt->rowCount() > 0) {
                 echo '<div class="error">Email sudah terdaftar. Silakan gunakan email lain.</div>';
             } else {
-                // Insert data pengguna baru
                 $stmt = $koneksi->prepare("INSERT INTO user (nama, no_telp, alamat, email, password) 
                                            VALUES (:nama, :no_telp, :alamat, :email, :password)");
                 $stmt->bindParam(':nama', $nama);

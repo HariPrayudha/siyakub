@@ -9,7 +9,6 @@ if (!isset($_SESSION['email'])) {
 
 $email = $_SESSION['email'];
 
-// Menangani pengiriman bukti transfer
 if (isset($_POST['submit'])) {
     $bukti_tf = $_FILES['bukti_tf'];
 
@@ -24,7 +23,6 @@ if (isset($_POST['submit'])) {
         if (in_array($ekstensi, $ekstensi_diperbolehkan)) {
             move_uploaded_file($file_tmp, 'admonly/buktitf/' . $nama_gambar_baru);
 
-            // Query untuk mengambil id pesanan berdasarkan email
             try {
                 $query_id = "SELECT id FROM pesanan WHERE email = :email LIMIT 1";
                 $stmt_id = $koneksi->prepare($query_id);
@@ -32,11 +30,9 @@ if (isset($_POST['submit'])) {
                 $stmt_id->execute();
                 $pesanan = $stmt_id->fetch(PDO::FETCH_ASSOC);
 
-                // Cek apakah id pesanan ditemukan
                 if ($pesanan) {
                     $id = $pesanan['id'];
 
-                    // Query PDO untuk memperbarui bukti transfer berdasarkan id pesanan
                     $query = "UPDATE pesanan SET bukti_tf = :bukti_tf WHERE id = :id";
                     $stmt = $koneksi->prepare($query);
                     $stmt->bindParam(':bukti_tf', $nama_gambar_baru);
@@ -50,19 +46,15 @@ if (isset($_POST['submit'])) {
                         echo '<div class="error">Bukti Transfer Gagal Terkirim</div>';
                     }
                 } else {
-                    // Jika id pesanan tidak ditemukan
                     echo '<div class="error">Pesanan dengan email tersebut tidak ditemukan.</div>';
                 }
             } catch (PDOException $e) {
-                // Pesan error jika terjadi exception
                 echo '<div class="error">Terjadi kesalahan: ' . $e->getMessage() . '</div>';
             }
         } else {
-            // Pesan jika ekstensi file tidak valid
             echo '<div class="error">Gambar hanya bisa jpg atau png</div>';
         }
     } else {
-        // Pesan jika file tidak dipilih
         echo '<div class="error">Silakan pilih gambar untuk diunggah</div>';
     }
 }
